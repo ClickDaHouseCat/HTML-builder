@@ -26,6 +26,9 @@ async function copyDir() {
       } else {
         // Copy individual files
         await copyFile(sourcePath, destinationPath);
+
+        // Remove the source file after successful copy
+        await fs.unlink(sourcePath);
       }
     }));
 
@@ -56,6 +59,9 @@ async function copyDirRecursive(source, destination) {
     } else {
       // Copy individual files
       await copyFile(sourcePath, destinationPath);
+
+      // Remove the source file after successful copy
+      await fs.unlink(sourcePath);
     }
   }));
 }
