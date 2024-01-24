@@ -11,7 +11,13 @@ function fileHandler() {
   });
 
   function handleUserInput() {
-    rl.question('Введите текст для записи в файл: ', (userInput) => {
+    rl.question('Введите текст для записи в файл (для завершения введите "exit"): ', (userInput) => {
+      if (userInput.toLowerCase() === 'exit') {
+        console.log('Прощайте!');
+        rl.close();
+        return;
+      }
+
       // Добавление текста к существующему файлу
       fs.appendFile(mainFilePath, userInput + '\n', 'utf8', (err) => {
         if (err) {
@@ -25,6 +31,12 @@ function fileHandler() {
       });
     });
   }
+
+  // Обработка события прерывания (Ctrl+C)
+  rl.on('SIGINT', () => {
+    console.log('Прощайте!');
+    rl.close();
+  });
 
   // Начало процесса ввода текста
   handleUserInput();
