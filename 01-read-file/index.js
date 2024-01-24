@@ -1,12 +1,22 @@
 const fs = require('fs');
 
 function fileHandler() {
-  fs.readFile('./01-read-file/text.txt', 'utf8', (err, data) => {
-    if (err) {
-      console.error(err);
-      return;
-    }
+
+  const readStream = fs.createReadStream('./01-read-file/text.txt', 'utf8');
+
+
+  readStream.on('error', (err) => {
+    console.error(err);
+  });
+
+
+  readStream.on('data', (data) => {
     console.log(data);
+  });
+
+
+  readStream.on('end', () => {
+    console.log('File reading completed.');
   });
 }
 
